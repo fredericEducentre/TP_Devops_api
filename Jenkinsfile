@@ -28,5 +28,15 @@ pipeline {
                 '''
             }
         }
+        stage('Delivery') {
+            steps {
+                sh '''
+                    # Add docker_hub_pat parameter to the Jenkins configuration pipeline
+                    docker login  -u fredericeducentre -p $docker_hub_pat
+                    docker build . -t fredericeducentre/api
+                    docker push fredericeducentre/api
+                '''
+            }
+        }
     }
 }
